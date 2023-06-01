@@ -1,10 +1,9 @@
-package com.mockcompany.webapp.controller;
+package com.mockcompany.webapp.service;
 
 import com.mockcompany.webapp.api.SearchReportResponse;
 import com.mockcompany.webapp.model.ProductItem;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -13,25 +12,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-/**
- * Management decided it is super important that we have lots of products that match the following terms.
- * So much so, that they would like a daily report of the number of products for each term along with the total
- * product count.
- */
-@RestController
-public class ReportController {
+public interface ReportService {
+    public SearchReportResponse runReport();
+}
 
-    /**
-     * The people that wrote this code didn't know about JPA Spring Repository interfaces!
-     */
+@Service
+class ReportServiceImple implements ReportService {
+
     private final EntityManager entityManager;
 
     @Autowired
-    public ReportController(EntityManager entityManager) {
+    public ReportServiceImple(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
-    @GetMapping("/api/products/report")
+    @Override
     public SearchReportResponse runReport() {
         Map<String, Integer> hits = new HashMap<>();
         SearchReportResponse response = new SearchReportResponse();
