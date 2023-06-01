@@ -5,7 +5,7 @@ pipeline {
    */
    node {
      stage("Clone the project") {
-       git branch: 'main', url: 'https://github.com/nkchauhan003/jenkins-demo.git'
+       git branch: 'main', url: 'https://github.com/akshaychoudhary200/mock-company-webapp.git'
      }
      stage("Compilation") {
        sh "./mvnw clean install -DskipTests"
